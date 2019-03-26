@@ -18,7 +18,7 @@ namespace :dev do
         delivery_service: ["SEDEX", "CORREIOS"].sample,
         total_value: rand(10.0...1000.00).round(2).to_f,
         line_item: Faker::Device.model_name,
-        status: [1,2,3,4].sample,
+        status: rand(0..3),
         batch: Batch.all.sample
       )
     end
