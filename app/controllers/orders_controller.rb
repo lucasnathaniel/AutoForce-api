@@ -15,8 +15,18 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
-    @order = Order.new(order_params)
+    
+    #force status do 0(ready) and empty batch_id 
+    new_order_params = ActiveSupport::JSON.decode(ActiveSupport::JSON.encode(order_params))
+    new_order_params.merge!({:status=>0}).delete("batch_id")
 
+    @order = Order.new(new_order_params)
+    
+    #If param is missing
+    if new_order_params.length != 9
+      destroy
+    end
+    
     if @order.save
       render json: @order, status: :created, location: @order
     else
