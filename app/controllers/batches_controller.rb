@@ -1,5 +1,10 @@
 class BatchesController < ApplicationController
   before_action :set_batch, only: [:show, :update, :destroy]
+  
+  def summary
+    BatcherSummary.new(params[:batch_id]).total
+  end
+
 
   # GET /batches
   def index

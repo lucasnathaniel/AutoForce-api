@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :orders do
     collection do
       get '/search/reference/:reference', to: 'orders#search_reference'
-      get '/search/name/:client_name', to: 'orders#search_name' 
+      get '/search/name/:client_name', to: 'orders#search_name'
     end
   end
 

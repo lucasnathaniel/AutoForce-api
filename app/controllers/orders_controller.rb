@@ -19,12 +19,8 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
-    #If param is missing
-    raise 'Params missing' if order_params_create.length != 9
+    @order = Order.new(params_create)
     
-    @order = Order.new(order_params_create.merge(status: 0))
-    
-
     if @order.save
       render json: @order, status: :created, location: @order
     else

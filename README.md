@@ -37,11 +37,11 @@ curl http://localhost:3000/orders -H "Accept: application/json" -X POST -d '{"re
 
 ##### URL
 ```
-    orders/search/reference/:reference
-    orders/search/client_name/:client_name
+orders/search/reference/:reference
+orders/search/client_name/:client_name
 ```
 ##### Params
-- `reference`, OR
+- `reference`, or
 - `client_name`.
 
 ##### Exemple
@@ -53,7 +53,7 @@ curl http://localhost:3000/orders/search/reference/B0002I6HKW "Accept: applicati
 
 ##### URL
 ```
-/orders/purchase_channel/:purchase_channel
+orders/search/purchase_channel/:purchase_channel
 ```
 
 ##### Params
@@ -62,7 +62,7 @@ curl http://localhost:3000/orders/search/reference/B0002I6HKW "Accept: applicati
 ##### Exemple
 
 ```
-TODO
+curl http://localhost:3000/orders/search/purchase_channel/SiteBR "Accept: application/json"
 ```
 
 ### Batch
