@@ -5,6 +5,7 @@ class OrdersController < ApplicationController
 
   before_action :set_order_reference, only: [:search_reference, :update_reference]
   before_action :set_order_name, only: [:search_name, :update_name]
+  before_action :set_order_purchase_channel, only: [:search_purchase_channel]
 
   # tratamentos de erro
   #rescue_from do ||
@@ -19,7 +20,7 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
-    @order = Order.new(order_params_create)
+    @order = Order.new(order_params_create.merge(status: 0))
     
     if @order.save
       render json: @order, status: :created, location: @order
@@ -47,6 +48,11 @@ class OrdersController < ApplicationController
     render json: @order
   end
 
+  # GET /orders/search/purchase_channel/:purchase_channel
+  def search_purchase_channel
+    render json: @order
+  end  
+
   # DELETE /orders/1
   def destroy
     @order.destroy
@@ -60,6 +66,10 @@ class OrdersController < ApplicationController
 
     def set_order_name
       @order = Order.find_by(client_name: params[:client_name])
+    end
+
+    def set_order_purchase_channel
+      @order = Order.where(purchase_channel: params[:purchase_channel])
     end
 
     # Only allow a trusted parameter "white list" through.

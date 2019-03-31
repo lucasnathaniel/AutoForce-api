@@ -30,15 +30,15 @@ A platform to receive Purchase Orders from other systems, group them on Batches 
 
 ##### Exemple
 ```
-curl http://localhost:3000/orders -H "Accept: application/json" -X POST -d '{"reference":"BR102030", "purchase_channel":"Site BR", "client_name":"Joao", "address":"rua do limao", "delivery_service":"SEDEX", "total_value":666.66, "line_item":"iphone"}'
+curl http://localhost:3000/orders -X POST -H "Content-Type: application/json" -d '{"reference":"BR102030", "purchase_channel":"Site BR", "client_name":"Joao", "address":"rua do limao", "delivery_service":"SEDEX", "total_value":666.66, "line_item":"iphone"}'
 ```
 
 #### Status of an Order (DONE)
 
 ##### URL
 ```
-orders/search/reference/:reference
-orders/search/client_name/:client_name
+/orders/search/reference/:reference
+/orders/search/client_name/:client_name
 ```
 ##### Params
 - `reference`, or
@@ -46,10 +46,10 @@ orders/search/client_name/:client_name
 
 ##### Exemple
 ```
-curl http://localhost:3000/orders/search/reference/B0002I6HKW "Accept: application/json"
+curl http://localhost:3000/orders/search/reference/B0002I6HKW
 ```
 
-#### Order list from a purchase channel (TODO)
+#### Order list from a purchase channel (DONE)
 
 ##### URL
 ```
@@ -60,9 +60,8 @@ orders/search/purchase_channel/:purchase_channel
 - `purchase_channel`.
 
 ##### Exemple
-
 ```
-curl http://localhost:3000/orders/search/purchase_channel/SiteBR "Accept: application/json"
+curl http://localhost:3000/orders/search/purchase_channel/SiteBR
 ```
 
 ### Batch
@@ -80,7 +79,7 @@ curl http://localhost:3000/orders/search/purchase_channel/SiteBR "Accept: applic
 
 ##### Exemple
 ```
-curl http://localhost:3000/batchs -H "Accept: application/json" -X POST -d '{"reference":"201803-54", "purchase_channel":"Site BR"}'
+curl http://localhost:3000/batchs -X POST -H "Content-Type: application/json" -d '{"reference":"201803-54", "purchase_channel":"Site BR"}'
 ```
 
 #### Produce a Batch (TODO)
