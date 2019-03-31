@@ -12,12 +12,12 @@ A platform to receive Purchase Orders from other systems, group them on Batches 
 
 ### Order
 
+#### New Order (DONE)
+
 ##### URL
 ```
 /orders
 ```
-
-#### New Order (DONE)
 
 ##### Params
 - `reference`,
@@ -34,10 +34,11 @@ curl http://localhost:3000/orders -H "Accept: application/json" -X POST -d '{"re
 ```
 
 #### Status of an Order (DONE)
+
+##### URL
 ```
-URL's:
-	/search/reference/:reference
-    /search/name/:client_name
+    orders/search/reference/:reference
+    orders/search/client_name/:client_name
 ```
 ##### Params
 - `reference`, OR
@@ -50,17 +51,28 @@ curl http://localhost:3000/orders/search/reference/B0002I6HKW "Accept: applicati
 
 #### Order list from a purchase channel (TODO)
 
+##### URL
+```
+/orders/purchase_channel/:purchase_channel
+```
+
 ##### Params
 - `purchase_channel`.
 
+##### Exemple
+
+```
+TODO
+```
+
 ### Batch
+
+#### New Batch (DONE)
 
 ##### URL
 ```
 /batchs
 ```
-
-#### New Batch (DONE)
 
 ##### Params
 - `reference`,
@@ -73,6 +85,12 @@ curl http://localhost:3000/batchs -H "Accept: application/json" -X POST -d '{"re
 
 #### Produce a Batch (TODO)
 
+##### URL
+```
+/batchs/reference/:reference
+/batchs/purchase_channel/:purchase_channel
+```
+
 ##### Params
 - `reference`,
 - `purchase_channel`.
@@ -83,6 +101,11 @@ TODO
 ```
 
 #### Close part of a Batch for a Delivery Service (TODO)
+
+##### URL
+```
+/batchs/reference/:reference/:delivery_service
+```
 
 ##### Params
 - `reference`,
@@ -95,6 +118,11 @@ TODO
 ```
 
 #### Financial report (TODO)
+
+##### URL
+```
+/batchs/financial
+```
 
 ##### Params
 - `purchase_channel`.
