@@ -33,15 +33,19 @@ A platform to receive Purchase Orders from other systems, group them on Batches 
 curl http://localhost:3000/orders -H "Accept: application/json" -X POST -d '{"reference":"BR102030", "purchase_channel":"Site BR", "client_name":"Joao", "address":"rua do limao", "delivery_service":"SEDEX", "total_value":666.66, "line_item":"iphone"}'
 ```
 
-#### Status of an Order (TODO)
-
+#### Status of an Order (DONE)
+```
+URL's:
+	/search/reference/:reference
+    /search/name/:client_name
+```
 ##### Params
-- `reference`,
+- `reference`, OR
 - `client_name`.
 
 ##### Exemple
 ```
-TODO
+curl http://localhost:3000/orders/search/reference/B0002I6HKW "Accept: application/json"
 ```
 
 #### Order list from a purchase channel (TODO)

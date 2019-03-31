@@ -2,7 +2,8 @@ Rails.application.routes.draw do
 
   resources :orders do
     collection do
-      get '/search/:name', to: 'orders#search' 
+      get '/search/reference/:reference', to: 'orders#search_reference'
+      get '/search/name/:client_name', to: 'orders#search_name' 
     end
   end
 

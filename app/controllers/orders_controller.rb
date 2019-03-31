@@ -1,5 +1,14 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :update, :destroy]
+  # controller so precisa receber parametros
+  # entregar pra alguem
+  # e definir como responder ao usuario
+
+  before_action :set_order_reference, only: [:search_reference, :update_reference]
+  before_action :set_order_name, only: [:search_name, :update_name]
+
+  # tratamentos de erro
+  #rescue_from do ||
+  #end
 
   # GET /orders
   def index
@@ -8,25 +17,14 @@ class OrdersController < ApplicationController
     render json: @orders
   end
 
-  # GET /orders/1
-  def show
-    render json: @order
-  end
-
   # POST /orders
   def create
-    
-    #force status do 0(ready) and empty batch_id 
-    new_order_params = ActiveSupport::JSON.decode(ActiveSupport::JSON.encode(order_params))
-    new_order_params.merge!({:status=>0}).delete("batch_id")
-
-    @order = Order.new(new_order_params)
-    
     #If param is missing
-    if new_order_params.length != 9
-      destroy
-    end
+    raise 'Params missing' if order_params_create.length != 9
     
+    @order = Order.new(order_params_create.merge(status: 0))
+    
+
     if @order.save
       render json: @order, status: :created, location: @order
     else
@@ -34,13 +32,23 @@ class OrdersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /orders/1
-  def update
+  # PATCH/PUT /orders/update_reference/:reference
+  def update_reference
     if @order.update(order_params)
       render json: @order
     else
       render json: @order.errors, status: :unprocessable_entity
     end
+  end
+
+  # GET /orders/search/reference/:reference
+  def search_reference
+    render json: @order
+  end
+
+  # GET /orders/search/name/:client_name
+  def search_name
+    render json: @order
   end
 
   # DELETE /orders/1
@@ -50,12 +58,20 @@ class OrdersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
+    def set_order_reference
+      @order = Order.find_by(reference: params[:reference])
+    end
+
+    def set_order_name
+      @order = Order.find_by(client_name: params[:client_name])
     end
 
     # Only allow a trusted parameter "white list" through.
     def order_params
       params.require(:order).permit(:reference, :purchase_channel, :client_name, :address, :delivery_service, :total_value, :line_item, :status, :batch_id)
+    end
+
+    def order_params_create
+      params.require(:order).permit(:reference, :purchase_channel, :client_name, :address, :delivery_service, :total_value, :line_item, :status)
     end
 end
