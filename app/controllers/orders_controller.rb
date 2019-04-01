@@ -44,11 +44,6 @@ class OrdersController < ApplicationController
   # GET /orders/search/purchase_channel/:purchase_channel
   def search_purchase_channel
     render json: @order
-  end  
-
-  # DELETE /orders/1
-  def destroy
-    @order.destroy
   end
 
   private

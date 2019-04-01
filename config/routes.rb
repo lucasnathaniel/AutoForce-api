@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   end
 
   resources :batches do
-    member do
-      get :summary
+    collection do
+      get '/produce/reference/:reference', to: 'batches#produce'
     end
   end
 

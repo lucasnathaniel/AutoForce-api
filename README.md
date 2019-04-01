@@ -81,20 +81,19 @@ curl http://localhost:3000/orders/search/purchase_channel/SiteBR
 curl http://localhost:3000/batches -X POST -H "Content-Type: application/json" -d '{"purchase_channel":"Site BR"}'
 ```
 
-#### Produce a Batch (TODO)
+#### Produce a Batch (DONE)
 
 ##### URL
 ```
-/batches/reference/:reference
+/batches/produce/reference/:reference
 ```
 
 ##### Params
-- `reference`,
-- `purchase_channel`.
+- `reference`.
 
 ##### Exemple
 ```
-curl http://localhost:3000/batches -X POST -H "Content-Type: application/json" -d '{"purchase_channel":"Site BR"}'
+curl http://localhost:3000/batches/produce/reference/201956-2
 ```
 
 #### Close part of a Batch for a Delivery Service (TODO)

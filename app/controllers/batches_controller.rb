@@ -1,10 +1,10 @@
 class BatchesController < ApplicationController
-  before_action :set_batch, only: [:show, :update, :destroy]
-  after_action :after_create, only: [:create]
+  before_action :set_batch_reference, only: [:produce]
+  after_action :after_produce, only: [:produce]
   
-  def summary
-    BatcherSummary.new(params[:batch_id]).total
-  end
+  #def summary
+  #  BatcherSummary.new(params[:batch_id]).total
+  #end
 
   # GET /batches
   def index
@@ -26,6 +26,7 @@ class BatchesController < ApplicationController
     Order.find_each do |order|
       if batch_params[:purchase_channel] == order[:purchase_channel]
         order[:batch_id] = @batch[:id]
+        order[:status] = 1
         order.save
         count+=1
       end
@@ -47,22 +48,28 @@ class BatchesController < ApplicationController
     end
   end
 
-  # DELETE /batches/1
-  def destroy
-    @batch.destroy
+  # GET /batches/produce/reference/:reference
+  def produce
+    render json: @batch
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_batch
-      @batch = Batch.find(params[:id])
+    def set_batch_reference
+      @batch = Batch.find_by(reference: params[:reference])
     end
 
     # Only allow a trusted parameter "white list" through.
     def batch_params
       params.require(:batch).permit(:reference, :purchase_channel)
     end
-
-    def after_create
+    
+    def after_produce
+      Order.find_each do |order|
+        if order[:batch_id] == @batch[:id]
+          order[:status] = 2
+          order.save
+        end
+      end
     end
 end
