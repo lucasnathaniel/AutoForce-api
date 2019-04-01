@@ -1,15 +1,8 @@
 class OrdersController < ApplicationController
-  # controller so precisa receber parametros
-  # entregar pra alguem
-  # e definir como responder ao usuario
 
   before_action :set_order_reference, only: [:search_reference, :update_reference]
   before_action :set_order_name, only: [:search_name, :update_name]
   before_action :set_order_purchase_channel, only: [:search_purchase_channel]
-
-  # tratamentos de erro
-  #rescue_from do ||
-  #end
 
   # GET /orders
   def index

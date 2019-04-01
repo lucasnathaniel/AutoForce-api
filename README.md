@@ -74,12 +74,11 @@ curl http://localhost:3000/orders/search/purchase_channel/SiteBR
 ```
 
 ##### Params
-- `reference`,
 - `purchase_channel`.
 
 ##### Exemple
 ```
-curl http://localhost:3000/batchs -X POST -H "Content-Type: application/json" -d '{"reference":"201803-54", "purchase_channel":"Site BR"}'
+curl http://localhost:3000/batchs -X POST -H "Content-Type: application/json" -d '{"purchase_channel":"Site BR"}'
 ```
 
 #### Produce a Batch (TODO)
