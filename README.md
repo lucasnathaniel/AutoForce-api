@@ -12,11 +12,11 @@ A platform to receive Purchase Orders from other systems, group them on Batches 
 
 ### Order
 
-#### New Order (DONE)
+#### New Order
 
 ##### URL
 ```
-/orders
+POST /orders
 ```
 
 ##### Params
@@ -33,12 +33,12 @@ A platform to receive Purchase Orders from other systems, group them on Batches 
 curl http://localhost:3000/orders -X POST -H "Content-Type: application/json" -d '{"reference":"BR102030", "purchase_channel":"Site BR", "client_name":"Joao", "address":"rua do limao", "delivery_service":"SEDEX", "total_value":666.66, "line_item":"iphone"}'
 ```
 
-#### Status of an Order (DONE)
+#### Status of an Order
 
 ##### URL
 ```
-/orders/search/reference/:reference
-/orders/search/client_name/:client_name
+GET /orders/search/reference/:reference
+GET /orders/search/client_name/:client_name
 ```
 ##### Params
 - `reference`, or
@@ -49,11 +49,11 @@ curl http://localhost:3000/orders -X POST -H "Content-Type: application/json" -d
 curl http://localhost:3000/orders/search/reference/B0002I6HKW
 ```
 
-#### Order list from a purchase channel (DONE)
+#### Order list from a purchase channel
 
 ##### URL
 ```
-orders/search/purchase_channel/:purchase_channel
+GET orders/search/purchase_channel/:purchase_channel
 ```
 
 ##### Params
@@ -66,11 +66,11 @@ curl http://localhost:3000/orders/search/purchase_channel/SiteBR
 
 ### Batch
 
-#### New Batch (DONE)
+#### New Batch
 
 ##### URL
 ```
-/batches
+POST /batches
 ```
 
 ##### Params
@@ -81,11 +81,11 @@ curl http://localhost:3000/orders/search/purchase_channel/SiteBR
 curl http://localhost:3000/batches -X POST -H "Content-Type: application/json" -d '{"purchase_channel":"Site BR"}'
 ```
 
-#### Produce a Batch (DONE)
+#### Produce a Batch
 
 ##### URL
 ```
-/batches/produce/reference/:reference
+GET /batches/produce/reference/:reference
 ```
 
 ##### Params
@@ -96,28 +96,27 @@ curl http://localhost:3000/batches -X POST -H "Content-Type: application/json" -
 curl http://localhost:3000/batches/produce/reference/201956-2
 ```
 
-#### Close part of a Batch for a Delivery Service (TODO)
+#### Close part of a Batch for a Delivery Service
 
 ##### URL
 ```
-/batches/reference/:reference/:delivery_service
+GET /batches/close/:reference/:delivery_service
 ```
 
 ##### Params
 - `reference`,
-- `purchase_channel`,
 - `delivery_service`.
 
 ##### Exemple
 ```
-TODO
+curl http://localhost:3000/batches/close/201956-2/SEDEX
 ```
 
-#### Financial report (TODO)
+#### Financial report
 
 ##### URL
 ```
-/batches/financial
+GET /batches/financial_report/:purchase_channel
 ```
 
 ##### Params
@@ -125,5 +124,5 @@ TODO
 
 ##### Exemple
 ```
-TODO
+curl http://localhost:3000/batches/financial_report/Site BR
 ```

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   resources :batches do
     collection do
       get '/produce/reference/:reference', to: 'batches#produce'
+      get '/close/:reference/:delivery_service', to: 'batches#close'
+      get '/financial_report/:purchase_channel', to: 'batches#financial_report'
     end
   end
 
