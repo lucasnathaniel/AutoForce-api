@@ -4,13 +4,6 @@ class OrdersController < ApplicationController
   before_action :set_order_name, only: [:search_name, :update_name]
   before_action :set_order_purchase_channel, only: [:search_purchase_channel]
 
-  # GET /orders
-  def index
-    @orders = Order.all
-
-    render json: @orders
-  end
-
   # POST /orders
   def create
     @order = Order.new(order_params_create.merge(status: 0))
