@@ -1,5 +1,4 @@
 class OrdersController < ApplicationController
-
   before_action :set_order_reference, only: [:search_reference, :update_reference]
   before_action :set_order_name, only: [:search_name, :update_name]
   before_action :set_order_purchase_channel, only: [:search_purchase_channel]
@@ -61,4 +60,5 @@ class OrdersController < ApplicationController
     def order_params_create
       params.require(:order).permit(:reference, :purchase_channel, :client_name, :address, :delivery_service, :total_value, :line_item, :status)
     end
+
 end

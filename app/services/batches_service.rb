@@ -1,11 +1,12 @@
-class BatchesService
+#Class for Batches Controller methods: create
 
+class BatchesService
   def initialize(params)
     @purchase_channel = params[:purchase_channel]
   end
 
   def call
-    Batch.new(reference: Time.now.strftime("%Y%M-"<<Batch.all.size.to_s), purchase_channel: @purchase_channel)
+    Batch.new(reference: Time.now.strftime("%Y%M-" << Batch.all.size.to_s), purchase_channel: @purchase_channel)
   end
 
   def counter
@@ -16,9 +17,10 @@ class BatchesService
         order[:batch_id] = @batch[:id]
         order[:status] = 1
         order.save
-        count+=1
+        count += 1
       end
     end
     @counter = count
   end
+
 end
