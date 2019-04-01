@@ -70,7 +70,7 @@ curl http://localhost:3000/orders/search/purchase_channel/SiteBR
 
 ##### URL
 ```
-/batchs
+/batches
 ```
 
 ##### Params
@@ -78,15 +78,14 @@ curl http://localhost:3000/orders/search/purchase_channel/SiteBR
 
 ##### Exemple
 ```
-curl http://localhost:3000/batchs -X POST -H "Content-Type: application/json" -d '{"purchase_channel":"Site BR"}'
+curl http://localhost:3000/batches -X POST -H "Content-Type: application/json" -d '{"purchase_channel":"Site BR"}'
 ```
 
 #### Produce a Batch (TODO)
 
 ##### URL
 ```
-/batchs/reference/:reference
-/batchs/purchase_channel/:purchase_channel
+/batches/reference/:reference
 ```
 
 ##### Params
@@ -95,14 +94,14 @@ curl http://localhost:3000/batchs -X POST -H "Content-Type: application/json" -d
 
 ##### Exemple
 ```
-TODO
+curl http://localhost:3000/batches -X POST -H "Content-Type: application/json" -d '{"purchase_channel":"Site BR"}'
 ```
 
 #### Close part of a Batch for a Delivery Service (TODO)
 
 ##### URL
 ```
-/batchs/reference/:reference/:delivery_service
+/batches/reference/:reference/:delivery_service
 ```
 
 ##### Params
@@ -119,7 +118,7 @@ TODO
 
 ##### URL
 ```
-/batchs/financial
+/batches/financial
 ```
 
 ##### Params

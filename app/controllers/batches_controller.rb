@@ -6,7 +6,6 @@ class BatchesController < ApplicationController
     BatcherSummary.new(params[:batch_id]).total
   end
 
-
   # GET /batches
   def index
     @batches = Batch.all
@@ -22,9 +21,18 @@ class BatchesController < ApplicationController
   # POST /batches
   def create
     @batch = Batch.new(batch_params.merge(reference: Time.now.strftime("%Y%M-"<<Batch.all.size.to_s)))
-    
+    @batch.save
+    count = 0
+    Order.find_each do |order|
+      if batch_params[:purchase_channel] == order[:purchase_channel]
+        order[:batch_id] = @batch[:id]
+        order.save
+        count+=1
+      end
+    end
+
     if @batch.save
-      render json: @batch, status: :created, location: @batch
+      render json: @batch.as_json.merge(count_orders: count), status: :created, location: @batch
     else
       render json: @batch.errors, status: :unprocessable_entity
     end
@@ -56,11 +64,5 @@ class BatchesController < ApplicationController
     end
 
     def after_create
-      Order.find_each do |order|
-        if batch_params[:purchase_channel] == order[:purchase_channel]
-          order[:batch_id] = @batch[:id]
-          order.save
-        end
-      end
     end
 end
