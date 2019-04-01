@@ -1,6 +1,5 @@
 class BatchesController < ApplicationController
   before_action :set_batch_reference, only: [:produce, :close]
-  before_action :set_batch_purchase_channel, only: [:financial_report]
   after_action :after_produce, only: [:produce]
   after_action :after_close, only: [:close]
   
@@ -18,20 +17,10 @@ class BatchesController < ApplicationController
 
   # POST /batches
   def create
-    @batch = Batch.new(batch_params.merge(reference: Time.now.strftime("%Y%M-"<<Batch.all.size.to_s)))
-    @batch.save
-    count = 0
-    Order.find_each do |order|
-      if batch_params[:purchase_channel] == order[:purchase_channel]
-        order[:batch_id] = @batch[:id]
-        order[:status] = 1
-        order.save
-        count+=1
-      end
-    end
+    @batch = BatchesService.new(batch_params).call
 
     if @batch.save
-      render json: @batch.as_json.merge(count_orders: count), status: :created, location: @batch
+      render json: @batch.as_json.merge(count_orders: BatchesService.new(batch_params).counter), status: :created, location: @batch
     else
       render json: @batch.errors, status: :unprocessable_entity
     end
@@ -58,25 +47,14 @@ class BatchesController < ApplicationController
 
   # GET /batches/financial_report/:purchase_channel
   def financial_report
-    count = 0
-    sum = 0
-    Order.find_each do |order|
-      if order[:batch_id] == @batch[:id]
-        count+=1
-        sum+=order[:total_value]
-      end
-    end
-    render json: @batch.as_json.merge(count_orders: count, total_value_report: sum)
+    @financial = FinancialService.new(params[:purchase_channel]).report
+    render json: @financial
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_batch_reference
       @batch = Batch.find_by(reference: params[:reference])
-    end
-
-    def set_batch_purchase_channel
-      @batch = Batch.find_by(purchase_channel: params[:purchase_channel])
     end
 
     # Only allow a trusted parameter "white list" through.
